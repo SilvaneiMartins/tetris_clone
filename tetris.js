@@ -82,6 +82,7 @@ let currentShape;
 let nextShape;
 let score;
 let initialTwoDArr;
+let whiteLineTickness = 4;
 
 
 let gameLoop = () => {
@@ -94,8 +95,46 @@ let update = () => {
 
 }
 
-let draw = () => {
+let drawRect = (x, y, width, height, color) => {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, width, height);
+}
 
+let drawBackground = () => {
+  drawRect(0, 0, canvas.width, canvas.height, "#BCA0DC")
+  
+  for (let i = 0, i < squareCountX + 1; i ++) {
+    drawRect(
+      0,
+      size * i - whiteLineThickness, 
+      canvas.height, 
+      "white"
+    );
+  }
+
+  for (let i = 0, i < squareCountY + 1, i ++) {
+    drawRect(
+      0,
+      size * i - whiteLineThickness,
+      canvas.width,
+      "white",
+    );
+  }
+}
+
+let drawCurrentTetris = () => {
+  
+}
+
+let draw = () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBackground();
+  drawSquares();
+  drawCurrentTetris();
+  drawNextShape();
+  if (gameOver) {
+    drawGameOver();
+  }
 }
 
 let getRandomShape = () => {
