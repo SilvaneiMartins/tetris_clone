@@ -103,7 +103,7 @@ let drawRect = (x, y, width, height, color) => {
 let drawBackground = () => {
   drawRect(0, 0, canvas.width, canvas.height, "#BCA0DC")
   
-  for (let i = 0, i < squareCountX + 1; i ++) {
+  for (let i = 0; i < squareCountX + 1; i ++) {
     drawRect(
       0,
       size * i - whiteLineThickness, 
@@ -112,7 +112,7 @@ let drawBackground = () => {
     );
   }
 
-  for (let i = 0, i < squareCountY + 1, i ++) {
+  for (let i = 0; i < squareCountY + 1, i ++) {
     drawRect(
       0,
       size * i - whiteLineThickness,
@@ -123,8 +123,28 @@ let drawBackground = () => {
 }
 
 let drawCurrentTetris = () => {
-  
+  for (let i = 0; i < currentShape.template.length; i ++) {
+    for (let j = 0; j < currentShape.template.length; j ++) {
+      if (currentShape.template[i][j] == 0) continue;
+      ctx.drawImage(
+        image,
+        currentShape.imageX,
+        currentShape.imageY,
+        imageSquareSize,
+        imageSquareSize,
+        Math.trunc(currentShape.x) * size + size * i,
+        Math.trunc(currentShape.y) * size + size * j,
+        size,
+        size
+      );
+    }
+  }
 }
+
+let drawSquares = () => {}
+
+let drawNextShape = () => {}
+
 
 let draw = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -143,13 +163,17 @@ let getRandomShape = () => {
 
 let resetVars = () => {
   initialTwoDArr = [];
+
   for (let i = 0; i < squareCountY; i ++) {
     let temp = [];
+
     for (let j = 0; j < squareCountX; j ++) {
       temp.push({ imageX: -1, imageY: -1});
     }
+
     initialTwoDArr.push(temp)
   }
+
   score = 0;
   gameOver = false;
   currentShape = getRandomShape();
@@ -157,8 +181,7 @@ let resetVars = () => {
   gameMap = initialTwoDArr;
 }
 
-
-
+resetVars();
 gameLoop();
 
 
