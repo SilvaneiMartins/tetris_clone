@@ -1,12 +1,31 @@
 <html>
 	<head>
 		<title>Tetris Game Clone</title>
+
+    <style>
+      button:hover {
+        background-color: #bca0dc !important;
+      }
+
+      button:active {
+        background-color: 9969d0 !important;
+      }
+    </style>  
 	<head>
 	<body>
-		<canvas id="canvas" width="400" height="800"> </canvas>
-		<img id="image" src="rotations.png" style="display: none" />
-		
-    <h1>Silvanei Martins</h1>
+    <div>
+		  <canvas id="canvas" width="400" height="800"></canvas>
+	    <canvas    
+        id="nextShapeCanvas"
+        width="200"
+        height="200"
+        style="position: absolute; top: 10"
+      ></canvas>
+
+
+
+      <img id="image" src="rotations.png" style="display: none" />
+    </div>
 
     <script src="tetris.js"></script>
 	</body>

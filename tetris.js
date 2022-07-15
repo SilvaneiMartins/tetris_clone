@@ -37,8 +37,6 @@ const nextShapeCanvas = document.getElementById("nextShapeCanvas");
 const scoreCanvas = document.getElementById("scoreCanvas");
 const image = document.getElementById("image");
 const ctx = canvas.getContext("2d");
-const nctx = nextShapeCanvas.getContext("2d");
-const sctx = scoreCanvas.getContext("2d");
 const squareCountX = canvas.width / size;
 const squareCountY = canvas.height / size;
 
@@ -147,6 +145,8 @@ let drawSquares = () => {};
 
 let drawNextShape = () => {};
 
+let drawScore = () => {};
+
 let drawGameOver = () => {};
 
 let draw = () => {
@@ -170,9 +170,11 @@ let resetVars = () => {
   
   for (let i = 0; i < squareCountY; i++) {
     let temp = [];
+
     for (let j = 0; j < squareCountX; j++) {
       temp.push({ imageX: -1, imageY: -1 });
     }
+
     initialTwoDArr.push(temp);
   }
 
