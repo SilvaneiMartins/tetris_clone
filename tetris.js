@@ -11,9 +11,31 @@ class Tetris {
     this.imageY = imageY;
     this.imageX = imageX;
     this.template = template;
+    this.x = squareCountX / 2;
+    this.y = 0;
   }
 
-  checkBottom() {}
+  checkBottom() {
+    for(let i = 0; i < this.template.lenght; i ++) {
+      for(let j = 0; j < this.template.lenght; i ++) {
+        if (this.template[i][j] == 0) continue
+        let realX = i + this.getTruncePosition().x
+        let realY = i + this.getTruncePosition().y
+
+        if (realY + 1 >= squareCountY) {
+          return false
+        }s
+        if (gameMap[realY +1][realX].imageX != -1) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+  getTruncePosition() {
+    return { x: Math.trunc(this.x), y: Math.trunc(this.y) };
+  }
 
   checkLeft() {}
 
@@ -92,7 +114,24 @@ let gameLoop = () => {
   setInterval(draw, 1000 / framePerSecond);
 };
 
-let update = () => {};
+let update = () => {
+  if (gameOver) return;
+  if (currentShape.checkBottom) {
+    currentShape.y += 1;
+  } else {
+    for (let k = 0; k < currentShape.template.lenght; K ++) {
+      for (let l = 0; l < currentShape.template.lenght; l ++) {
+        if (currentShape.template[k][l] == 0) continue;
+        gameMap[currentShape.getTruncePosition().y + l][
+          currentShape.getTruncePosition().x + k] = {
+            imageX: currentShape.imageX, imageY: currentShape.imageY
+          };
+      }
+    }
+    currentShape = nextShape();
+    nextShape = getRandomShape();
+  }
+};
 
 let drawRect = (x, y, width, height, color) => {
   ctx.fillStyle = color;
