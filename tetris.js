@@ -16,16 +16,16 @@ class Tetris {
   }
 
   checkBottom() {
-    for(let i = 0; i < this.template.length; i ++) {
-      for(let j = 0; j < this.template.length; i ++) { // Corrigir
+    for (let i = 0; i < this.template.length; i++) {
+      for (let j = 0; j < this.template.length; j++) {
         if (this.template[i][j] == 0) continue
         let realX = i + this.getTruncePosition().x
         let realY = j + this.getTruncePosition().y
 
         if (realY + 1 >= squareCountY) {
           return false
-        }s // Corrigir
-        if (gameMap[realY +1][realX].imageX != -1) {
+        }
+        if (gameMap[realY + 1][realX].imageX != -1) {
           return false
         }
       }
@@ -38,6 +38,18 @@ class Tetris {
   }
 
   checkLeft() {
+    for (let i = 0; i < this.template.length; i++) {
+      for (let j = 0; j < this.template.length; j++) {
+        if (this.template[i][j] === 0) continue;
+        let realX = i + this.getTruncePosition().x;
+        let realY = j + this.getTruncePosition().y;
+        if (realX - i < 0) {
+          return false;
+        }
+
+        if (gameMap[realY][realX - 1].imageX != -1) return false;
+      }
+    }
     return true;
   }
 
@@ -66,25 +78,25 @@ class Tetris {
   changeRotation() {
     let tempTemplate = [];
 
-    for (let i = 0; i < this.template.length; i ++) {
-      tempTemplate[i].slice(); // Corrigir
+    for (let i = 0; i < this.template.length; i++) {
+      temmTemplate[i] = this.template[i].slice();
     }
 
-      let n = this.template.length;
-      for (let layer = 0; layer < n / 2; layer ++) {
-        let first = layer;
-        let last = n - 1 - layer;
+    let n = this.template.length;
+    for (let layer = 0; layer < n / 2; layer++) {
+      let first = layer;
+      let last = n - 1 - layer;
 
-        for (let i = first; i < last; i ++) {
-          let offset = i - first; 
-          let top = this.template[first][i];
+      for (let i = first; i < last; i++) {
+        let offset = i - first;
+        let top = this.template[first][i];
 
-          this.template[first][i] = this.template[i][last]; // Top = right
-          this.template[i][last] = this.template[last][last - offset]; // Right = bottom
-          this.template[last][last - offset] = this.template[last = offset][first]; // Bottom = left // Corrigir 
-          this.template[last - offset][first] = top // Left = top
-        }
+        this.template[first][i] = this.template[i][last]; // Top = right
+        this.template[i][last] = this.template[last][last - offset]; // Right = bottom
+        this.template[last][last - offset] = this.template[last - offset][first]; // Bottom = left 
+        this.template[last - offset][first] = top // Left = top
       }
+    }
   }
 }
 
@@ -154,16 +166,15 @@ let gameLoop = () => {
 
 let update = () => {
   if (gameOver) return;
-  if (currentShape.checkBottom) {
+  if (currentShape.checkBottom()) {
     currentShape.y += 1;
   } else {
-    for (let k = 0; k < currentShape.template.length; K ++) {
-      for (let l = 0; l < currentShape.template.length; l ++) {
-        if (currentShape.template[k][l] == 0) continue;
+    for (let k = 0; k < currentShape.template.length; k++) {
+      for (let l = 0; l < currentShape.template.length; l++) {
+        if (currentShape.template[k][l] === 0) continue;
         gameMap[currentShape.getTruncePosition().y + l][
-          currentShape.getTruncePosition().x + k] = {
-            imageX: currentShape.imageX, imageY: currentShape.imageY
-          };
+          currentShape.getTruncePosition().x + k
+        ] = { imageX: currentShape.imageX, imageY: currentShape.imageY };
       }
     }
     currentShape = nextShape();
@@ -202,7 +213,7 @@ let drawBackground = () => {
 let drawCurrentTetris = () => {
   for (let i = 0; i < currentShape.template.length; i++) {
     for (let j = 0; j < currentShape.template.length; j++) {
-      if (currentShape.template[i][j] == 0) continue;
+      if (currentShape.template[i][j] === 0) continue;
       ctx.drawImage(
         image,
         currentShape.imageX,
@@ -219,13 +230,13 @@ let drawCurrentTetris = () => {
 };
 
 let drawSquares = () => {
-  for (let i = 0; i < gameMap.length; i ++) {
+  for (let i = 0; i < gameMap.length; i++) {
     let t = gameMap[i];
 
-    for (let j = 0; j < t.length; j ++) {
-      if (t[j].imageX = -1) continue;
+    for (let j = 0; j < t.length; j++) {
+      if (t[j].imageX === -1) continue;
 
-      ctx.drawImageX(
+      ctx.drawImage(
         image,
         t[j].imageX,
         t[j].imageY,
@@ -240,11 +251,11 @@ let drawSquares = () => {
   }
 };
 
-let drawNextShape = () => {};
+let drawNextShape = () => { };
 
-let drawScore = () => {};
+let drawScore = () => { };
 
-let drawGameOver = () => {};
+let drawGameOver = () => { };
 
 let draw = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -264,7 +275,7 @@ let getRandomShape = () => {
 
 let resetVars = () => {
   initialTwoDArr = [];
-  
+
   for (let i = 0; i < squareCountY; i++) {
     let temp = [];
 
@@ -283,10 +294,10 @@ let resetVars = () => {
 };
 
 window.addEventListener('keydown', (event) => {
-  if (event.keyCode == 37) currentShape.moveLeft();
-  else if (event.keyCode == 38) currentShape.changeRotation();
-  else if (event.keyCode == 39) currentShape.moveRight();
-  else if (event.keyCode == 40) currentShape.moveBottom();
+  if (event.keyCode === 37) currentShape.moveLeft();
+  else if (event.keyCode === 38) currentShape.changeRotation();
+  else if (event.keyCode === 39) currentShape.moveRight();
+  else if (event.keyCode === 40) currentShape.moveBottom();
 });
 
 
