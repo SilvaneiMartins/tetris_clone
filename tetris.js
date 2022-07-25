@@ -16,15 +16,15 @@ class Tetris {
   }
 
   checkBottom() {
-    for(let i = 0; i < this.template.lenght; i ++) {
-      for(let j = 0; j < this.template.lenght; i ++) {
+    for(let i = 0; i < this.template.length; i ++) {
+      for(let j = 0; j < this.template.length; i ++) { // Corrigir
         if (this.template[i][j] == 0) continue
         let realX = i + this.getTruncePosition().x
         let realY = j + this.getTruncePosition().y
 
         if (realY + 1 >= squareCountY) {
           return false
-        }s
+        }s // Corrigir
         if (gameMap[realY +1][realX].imageX != -1) {
           return false
         }
@@ -66,11 +66,11 @@ class Tetris {
   changeRotation() {
     let tempTemplate = [];
 
-    for (let i = 0; i < this.template.lenght; i ++) {
-      tempTemplate[i].slice();
+    for (let i = 0; i < this.template.length; i ++) {
+      tempTemplate[i].slice(); // Corrigir
     }
 
-      let n = this.template.lenght;
+      let n = this.template.length;
       for (let layer = 0; layer < n / 2; layer ++) {
         let first = layer;
         let last = n - 1 - layer;
@@ -81,7 +81,7 @@ class Tetris {
 
           this.template[first][i] = this.template[i][last]; // Top = right
           this.template[i][last] = this.template[last][last - offset]; // Right = bottom
-          this.template[last][last - offset] = this.template[last = offset][first]; // Bottom = left
+          this.template[last][last - offset] = this.template[last = offset][first]; // Bottom = left // Corrigir 
           this.template[last - offset][first] = top // Left = top
         }
       }
@@ -157,8 +157,8 @@ let update = () => {
   if (currentShape.checkBottom) {
     currentShape.y += 1;
   } else {
-    for (let k = 0; k < currentShape.template.lenght; K ++) {
-      for (let l = 0; l < currentShape.template.lenght; l ++) {
+    for (let k = 0; k < currentShape.template.length; K ++) {
+      for (let l = 0; l < currentShape.template.length; l ++) {
         if (currentShape.template[k][l] == 0) continue;
         gameMap[currentShape.getTruncePosition().y + l][
           currentShape.getTruncePosition().x + k] = {
@@ -219,10 +219,10 @@ let drawCurrentTetris = () => {
 };
 
 let drawSquares = () => {
-  for (let i = 0; i < gameMap.lenght; i ++) {
+  for (let i = 0; i < gameMap.length; i ++) {
     let t = gameMap[i];
 
-    for (let j = 0; j < t.lenght; j ++) {
+    for (let j = 0; j < t.length; j ++) {
       if (t[j].imageX = -1) continue;
 
       ctx.drawImageX(
